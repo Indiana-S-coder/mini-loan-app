@@ -1,54 +1,52 @@
 const User = require('../models/user');
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+const ErrorHandler = require('../util/errorHandler');
 const {createSecretToken} = require('../util/SecretToken');
-const bcrypt = require("bcryptjs");
 
-module.exports.Signup = async(req, res, next) => {
-    try {
-        const {email, password, username} = req.body;
-        const existingUser = await User.findOne({email});
-        if(existingUser){
-            return res.json({message: "User already exists"});
-        }
-        const user = await User.create({email, password, username});
 
-        const token = createSecretToken(user._id);
-        res.cookie("token", token, {httpOnly: true});
-        res.status(201).json({message:"User signed in Successfully", success:true, user});
+exports.Signup = catchAsyncErrors(async(req, res, next) => {
+    
+    const {email, password, username} = req.body;
 
-        next();
-    }catch(error){
-        console.error(error);
-    }
-}
+    const user = await User.create({
+        username,
+        email,
+        password,
+    });
+    sendToken(user, 201, res); 
+});
 
-module.exports.Login = async(req, res, next) => {
-    try {
+
+exports.Login = catchAsyncErrors(async(req, res, next) => {
         const { email, password} = req.body;
+        
         if(!email || !password) {
-            return res.json({message: "All fields are required"});
+            return next(new ErrorHandler("All fields are required", 400));
         }
 
         const user = await User.findOne({ email });
+
         if(!user){
-            return res.json({message: 'Incorrect password or email'});
+            return next(new ErrorHandler( 'Incorrect password or email', 401));
         }
 
-        const auth = await bcrypt.compare(password, user.password);
+        const isPasswordMatched = await user.comparePassword(password);
 
-        if(!auth){
-            return res.json({message:'Incorrect password or email'});
+        if(!isPasswordMatched){
+            return next(new ErrorHandler('Incorrect password or email', 401));
         }
 
-        const token = createSecretToken(user._id);
+        sendToken(user, 200, res);
+    });
 
-        res.token = createSecretToken(user._id);
-        res.cookie('token', token, {
-            withCredentials: true,
-            httpOnly: true,
-        });
-        res.status(201).json({ message: "User logged in successfully"})
-        next();
-    }catch(error){
-        console.error(error);
-    }
-}
+    exports.logOut = catchAsyncErrors(async(req, res, next) => {
+        res.cookie("token", null, {
+            expires: new Date(Date.now()),
+            httpOnly: true
+        })
+        
+        res.status(200).json({
+            success: true,
+            message: "Logged out"
+        })
+    })

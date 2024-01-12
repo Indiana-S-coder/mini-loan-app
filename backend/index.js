@@ -23,13 +23,6 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use('/api/v1', userRoute);
 
-mongoose.connect(MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.log(err));
-
 
 process.on("uncaughtException", (err) => {
   console.log(`Error ${err.message}`);
