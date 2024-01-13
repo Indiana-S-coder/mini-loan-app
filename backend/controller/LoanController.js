@@ -5,7 +5,7 @@ const ErrorHandler = require('../util/errorhandler');
 const Schema = mongoose.Schema;
 
 // Create a new loan
-exports.createLoan = catchAsyncErrors(async (req, res, next) => {
+exports.createLoan = catchAsyncErrors(async(req, res, next) => {
     const { loan_amount, loan_term } = req.body;
     const weekly_payment = loan_amount / (loan_term * 1000);
     const user = req.user;

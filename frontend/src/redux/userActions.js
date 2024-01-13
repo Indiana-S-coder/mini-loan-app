@@ -24,7 +24,8 @@ export const login = (email, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post(`http://localhost:4000/api/v1/login`, { email, password }, config)
-
+        localStorage.setItem('token', data.token);
+        
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data.user
@@ -51,7 +52,7 @@ export const register = (userData) => async (dispatch) => {
         }
 
         const { data } = await axios.post(`http://localhost:4000/api/v1/register`, userData, config)
-
+        localStorage.setItem('token', data.token);
         dispatch({
             type: REGISTER_USER_SUCCESS,
             payload: data.user
@@ -68,6 +69,7 @@ export const register = (userData) => async (dispatch) => {
 // Logout user
 export const logout = () => async (dispatch) => {
     try {
+        localStorage.removeItem('token');
         await axios.get(`/api/v1/logout`)
 
         dispatch({

@@ -5,15 +5,19 @@ const ErrorHandler = require("../util/errorhandler");
 const catchAsyncErrors = require("./catchAsyncErrors");
 
 exports.isAuthenticatedUser = catchAsyncErrors(async(req, res, next) => {
-    const {token} = req.cookies
-    
+    const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+    console.log(token)
     if(!token){
-        return next(new ErrorBoundaryHandler("Please login to continue", 401))
+        return next(new ErrorHandler("Please login to continue", 401))
     }
 
-    const decodeData = jwt.verify(token, process.env.TOKEN_KEY);
+    try {const decodeData = jwt.verify(token, process.env.TOKEN_KEY);
+    
     req.user = await User.findById(decodeData.id);
     next();
+}catch (error){
+    return next(new ErrorHandler("Invalid token. Please login again", 401))
+}
 });
 
 exports.authorizeRoles = (...roles) => {
