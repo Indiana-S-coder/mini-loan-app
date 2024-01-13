@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./routes/userRoute');
+const loanRoute = require('./routes/loanRoute');
 const bodyParser = require("body-parser");
 const errorMiddleware = require('./middleware/error');
 
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({
 );
 
 app.use(cors());
+app.use("/api/v1", loanRoute);
 app.use("/api/v1", userRoute);
 
 const corsOptions = {

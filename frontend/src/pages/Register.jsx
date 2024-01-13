@@ -50,7 +50,7 @@ const Register = () => {
           <div className='mb-6 h-[70vh] flex rounded-lg shadow-sm'>
               <div className='px-12 flex flex-col items-center justify-center bg-white rounded-r-lg'>
                       <h1 className='text-[40px] mt-0 mb-4'>Register</h1>
-                    <form action="" className='flex flex-col items-center' onSubmit={handleSubmit}>
+                    <form className='flex flex-col items-center' onSubmit={handleSubmit}>
                       <div className='flex flex-col items-start my-1'>
                       <label htmlFor="userName">Username</label>
                       <input type="text"
