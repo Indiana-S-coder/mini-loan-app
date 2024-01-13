@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import { Row, Col, Card, CardBody, Table } from "reactstrap";
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLoans } from '../redux/loanAction';
@@ -14,34 +15,108 @@ const LoanList = () => {
 
     return (
         <>
-            <h1 className="mb-5 text-center">Loan Details</h1>
-            <table className="w-full text-center">
-                <thead>
-                    <tr>
-                        <th className="p-2">Loan Amount</th>
-                        <th className="p-2">Loan Term</th>
-                        <th className="p-2">Status</th>
-                        <th className="p-2">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {loans.map((loan) => (
-                        <tr key={loan._id}>
-                            <td className="p-2">{loan.loan_amount}</td>
-                            <td className="p-2">{loan.loan_term}</td>
-                            <td className="p-2">{loan.status}</td>
-                            <td className="p-2">
-                                <Link
-                                    to={`/loan/${loan._id}`}
-                                    className="px-2 py-1 bg-blue-500 rounded-md text-white"
-                                >
-                                    View
-                                </Link>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <h1 className="my-5 font-bold font-xl text-center">Loan Details</h1>
+            <Card className=" mb-5">
+        <CardBody className="text-center">
+          <Row>
+            <Col md="4">
+              <h3>{loans?.loans?.length}</h3>
+              <div>Total Loans</div>
+            </Col>
+            <Col md="4">
+              <h3>
+                $
+                {loans &&
+                  loans.loans
+                    ?.reduce((sum, i) => (sum += i.loan_balance), 0)
+                    .toLocaleString("en-US", {
+                      maximumFractionDigits: 2,
+                      minimumFractionDigits: 2,
+                    })}
+              </h3>
+              <div>Total Balance</div>
+            </Col>
+            <Col md="4">
+              <Link
+                to="/loan"
+                size="lg"
+                color="secondary"
+                className="btn btn-success btn-lg"
+              >
+                Add new Loan
+              </Link>
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
+
+      <Table striped>
+        <thead>
+          <tr>
+            <th>Date Applied</th>
+            <th>Full Name</th>
+            <th>Term</th>
+            <th>Loan Status</th>
+            <th>Loan Amount</th>
+            <th>Loan Balance</th>
+            <th>Weekly Payment</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {loans.loans?.map(
+            ({
+              _id,
+              name,
+              loan_balance,
+              loan_type,
+              status,
+              loan_amount,
+              loan_term,
+              date_applied,
+              weekly_payment,
+            }) => (
+              <tr key={_id}>
+                <td>
+                  <Moment format="YYYY-MM-DD HH:mm">{date_applied}</Moment>
+                </td>
+                <td>{user.name}</td>
+                <td>{loan_term} months</td>
+                <td>{status}</td>
+                <td>
+                  ${" "}
+                  {loan_amount?.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  })}
+                </td>
+                <td>
+                  ${" "}
+                  {loan_balance?.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  })}
+                </td>
+                <td>
+                  ${" "}
+                  {weekly_payment?.toLocaleString("en-US", {
+                    maximumFractionDigits: 5,
+                    minimumFractionDigits: 2,
+                  })}
+                </td>
+                <td>
+                  <Link to={`/repay/${_id}`} className="btn btn-success btn-sm">
+                    Repay
+                  </Link>
+                </td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </Table>
+      <Link to="/" className="btn btn-outline-secondary">
+        Back
+      </Link>
         </>
     );
 }

@@ -77,7 +77,22 @@ const ApplyLoan = () => {
                 required
                 className='border-none p-2 rounded-md bg-[#edf5f3] my-1 text-md' />
                 </div>
-
+                {user.role === "admin" && (
+                  <div className='flex flex-col items-start my-1'>
+                    <label htmlFor="status">Status</label>
+                    <select
+                      name="status"
+                      id="status"
+                      onChange={(e) => setLoanStatus(e.target.value)}
+                      value={loanStatus}
+                      className='border-none p-2 rounded-md bg-[#edf5f3] my-1 text-md'
+                    >
+                      <option value="PENDING">Pending</option>
+                      <option value="APPROVED">Approved</option>
+                      <option value="REJECTED">Rejected</option>
+                    </select>
+                  </div>
+                )}
                 <button type='submit' className='border-none mt-2 text-white py-2 px-5 bg-slate-600 font-bold cursor-pointer'>
                     Apply
                 </button>
