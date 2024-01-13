@@ -5,20 +5,20 @@ const jwt = require("jsonwebtoken");
 const userSchema = new mongoose.Schema({
     userName: {
         type: String,
-        required: true,
+        required: [true, 'Please enter your name'],
         min: 3,
         max: 20,
     },
     password: {
         type: String,
-        required: true,
+        required: [true, 'Please enter your password'],
         min: 4,
         max: 25,
         select: false,
     },
     email:{
         type: String,
-        required: true,
+        required: [true, 'Please enter your email'],
         unique: true,
     },
     role:{
@@ -36,7 +36,7 @@ userSchema.pre("save", async function (next) {
     if(!this.isModified("password")){
         next();
     }
-    this.password = await bcrypt.hash(this.password, 12);
+    this.password = await bcrypt.hash(this.password, 10);
   });
 
   //JWT token

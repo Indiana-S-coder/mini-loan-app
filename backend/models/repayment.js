@@ -20,7 +20,7 @@ const repayment = new Schema({
     status:{
         type: String,
         enum: ['PENDING', 'PAID'],
-        default: 'Paid'
+        default: 'PAID'
     }
 });
 

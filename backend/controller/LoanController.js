@@ -3,6 +3,7 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const Loan = require('../models/loan');
 const ErrorHandler = require('../util/errorhandler');
 const Schema = mongoose.Schema;
+const Repayment = require('../models/repayment');
 
 // Create a new loan
 exports.createLoan = catchAsyncErrors(async(req, res, next) => {
@@ -85,13 +86,13 @@ exports.updateLoan = catchAsyncErrors(async (req, res, next) => {
     }
 
     // payment history
-    const historyDate = {
+    const historyData = {
         loan: loan._id,
         amount_paid,
         remaining_balance: loan.loan_balance,
     }
 
-    const payment = await Repayment.create(historyDate);
+    const payment = await Repayment.create(historyData);
 
     // check if all repayments are paid
     const allRepaymentsPaid = await Repayment.find({
