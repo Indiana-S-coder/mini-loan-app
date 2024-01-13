@@ -1,16 +1,28 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
-import axios from 'axios'
-import {useCookies} from 'react-cookie'
-import {useEffect, useState} from 'react'
 import img from '../assets/8292064.jpg'
 import Loader from '../components/Loader'
+import {useSelector, useDispatch} from 'react-redux'
+import {clearErrors} from '../redux/userActions'
 
 function Home() {
   const navigate = useNavigate();
+  const {loading} = useSelector((state) => state.user);
+  const {isAuthenticated, user} = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(!isAuthenticated) {
+      dispatch(clearErrors())
+    }
+  }, [isAuthenticated, dispatch]);
+
 
   return (
     <>
+      { loading ? (
+        <Loader />
+      ) : (
           <div className='flex justify-between items-center'>
             <div className=' flex flex-col pl-[15rem] text-center'>
                 <span className='font-700 text-5xl pb-5 text-slate-400'>Mini Loan App</span>
@@ -20,7 +32,7 @@ function Home() {
                 <img src={img} alt="" />
             </div>
         </div>
-        
+      )} 
     </>
   )
 }

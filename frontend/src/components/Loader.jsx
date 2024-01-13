@@ -3,7 +3,7 @@ import { Spinner } from "reactstrap"; // Import Reactstrap Spinner component
 
 const Loader = () => {
   return (
-    <div className="loading">
+    <div className="pt-40 text-center text-5xl text-red-400">
       <Spinner
         color="primary"
         style={{

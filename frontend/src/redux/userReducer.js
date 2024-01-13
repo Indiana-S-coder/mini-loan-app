@@ -68,8 +68,6 @@ export const userReducer = (state = { user: {} }, action) => {
 
 const initialState = {
     loading: false,
-    user: {},
     error: null,
-    isAuthenticated: false,
 }
 
