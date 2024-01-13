@@ -21,7 +21,7 @@ const Login = () => {
 
   useEffect(() => {
     if(error){
-      alert.error(error);
+      alert(error);
       dispatch(clearErrors());
     }
 
@@ -46,6 +46,7 @@ const Login = () => {
                       <input type="email"
                       placeholder='Email'
                       name='email'
+                      id='email'
                       onChange={(e) => setEmail(e.target.value)}
                       value={loginEmail}
                       required
@@ -57,6 +58,7 @@ const Login = () => {
                       <input type="password"
                       placeholder='Password'
                       name='password'
+                      id='password'
                       onChange={(e) => setPassword(e.target.value)}
                       value={loginPassword}
                       required

@@ -24,12 +24,12 @@ exports.Login = catchAsyncErrors(async(req, res, next) => {
             return next(new ErrorHandler("All fields are required", 400));
         }
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select('+password');
 
         if(!user){
             return next(new ErrorHandler( 'Incorrect password or email', 401));
         }
-
+        
         const isPasswordMatched = await user.comparePassword(password);
 
         if(!isPasswordMatched){
