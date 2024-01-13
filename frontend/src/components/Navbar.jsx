@@ -1,11 +1,18 @@
 import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { logout } from '../redux/userActions'
+import { useDispatch } from 'react-redux'
 
 const Navbar = () => {
     const navigate = useNavigate();
     const {user, isAuthenticated} = useSelector((state) => state.user);
-    console.log(isAuthenticated)
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+      dispatch(logout());
+      navigate('/');
+    }
+
   return (
     <>
     <div className='flex justify-between py-3 px-4'>
@@ -16,7 +23,7 @@ const Navbar = () => {
         {isAuthenticated ? (
            <div className='flex justify-between items-center'>
             <span className='px-1 text-md text-red-400 font-semibold'>Hi, {user?.username} !</span>
-            <button className='px-2.5 py-1 bg-slate-600 text-white mx-1 rounded-md ' onClick={() => navigate('/')}>Logout</button>
+            <button className='px-2.5 py-1 bg-slate-600 text-white mx-1 rounded-md ' onClick={handleLogout}>Logout</button>
           </div>
         
         ): (
