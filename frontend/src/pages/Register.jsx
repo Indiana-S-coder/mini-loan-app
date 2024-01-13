@@ -18,12 +18,12 @@ const Register = () => {
     password:"",
   })
   
-  const {userName, email, password} = user;
+  const {username, email, password} = user;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(register(user));
-  }
+  };
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -36,7 +36,7 @@ const Register = () => {
       dispatch(clearErrors());
     }
 
-    if(isAuthenticated === true){
+    if(!isAuthenticated === true){
       navigate("/");
     }
   }, [dispatch, error, isAuthenticated, navigate]);
@@ -58,7 +58,7 @@ const Register = () => {
                       name='userName'
                       id='userName'
                       onChange={handleChange}
-                      value={userName}
+                      value={username}
                       required
                       className='border-none p-2 rounded-md bg-[#edf5f3] my-1 text-md' />
                       </div>
