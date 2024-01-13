@@ -12,18 +12,30 @@ import {
 
 import axios from 'axios';
 
+const axiosUserInstance = axios.create({
+    baseURL: "http://localhost:4000/api/v1/",
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+// Interceptor to update the headers before each request
+axiosUserInstance.interceptors.request.use(
+    (config) => {
+        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 // Login
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: LOGIN_REQUEST })
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        const { data } = await axios.post(`http://localhost:4000/api/v1/login`, { email, password }, config)
+        const { data } = await axiosUserInstance.post(`http://localhost:4000/api/v1/login`, { email, password })
         localStorage.setItem('token', data.token);
         
         dispatch({
@@ -45,13 +57,7 @@ export const register = (userData) => async (dispatch) => {
     try {
         dispatch({ type: REGISTER_USER_REQUEST })
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        const { data } = await axios.post(`http://localhost:4000/api/v1/register`, userData, config)
+        const { data } = await axiosUserInstance.post(`http://localhost:4000/api/v1/register`, userData)
         localStorage.setItem('token', data.token);
         dispatch({
             type: REGISTER_USER_SUCCESS,
