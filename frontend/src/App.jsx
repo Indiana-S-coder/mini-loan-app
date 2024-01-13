@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import './App.css'
@@ -8,24 +7,28 @@ import Register from './pages/Register'
 import ApplyLoan from './pages/ApplyLoan'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminDashboard from './components/AdminDashboard'
-import {useSelector} from 'react-redux'
+import Repay from './components/Repay'
+import LoanList from './components/LoanList'
 
 
-function App() {
+const App = () => {
 
   return (
     <>
       <BrowserRouter>
         <Navbar/>
          <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/register" element={<Register/>} />
+          <Route exact path="/" element={<Home/>} />
+          <Route exact path="/login" element={<Login/>} />
+          <Route exact path="/register" element={<Register/>} />
           <Route element={<ProtectedRoute/>}>
             <Route exact path="/loan/" element={<ApplyLoan/>} />
           </Route>
           <Route element={<ProtectedRoute/>}>
             <Route exact path="/all-loans" element={<LoanList/>} />
+          </Route>
+          <Route element={<ProtectedRoute/>}>
+            <Route exact path="/repay/:id" element={<Repay/>}/>
           </Route>
           <Route element={<ProtectedRoute/>}>
             <Route exact path="/admin/dashboard" element={<AdminDashboard/>} />

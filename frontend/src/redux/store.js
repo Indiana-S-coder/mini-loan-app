@@ -1,10 +1,14 @@
 import { combineReducers} from "redux"
 import {thunk} from "redux-thunk"
-import { userReducer} from "./userReducer"
+import { userReducer, adminloanReducer} from "./userReducer"
 import { configureStore } from "@reduxjs/toolkit"
+import { loanReducer } from "./loanReducer"
+
 
 const reducer = combineReducers({
-      user: userReducer
+    loan: loanReducer,
+    user: userReducer,
+    adminLoan: adminloanReducer,
 })
 
 let initialState = {};

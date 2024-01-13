@@ -46,14 +46,14 @@ export const userReducer = (state = { user: {} }, action) => {
                 loading: false,
                 error: action.payload
             }
-        case LOGIN_FAIL:{
+        case LOGIN_FAIL:
             return {
                 loading: false,
                 isAuthenticated: false,
                 user: null,
                 error: action.payload
             }
-        }
+        
         case REGISTER_USER_FAIL:
             return {
                 ...state,
@@ -74,6 +74,7 @@ export const userReducer = (state = { user: {} }, action) => {
 
 const initialState = {
     loading: false,
+    loan: null,
     error: null,
 }
 

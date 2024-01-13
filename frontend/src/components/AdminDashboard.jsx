@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Table} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import {getLoans} from '../redux/loanAction';
-import {approveLoan} from '../redux/userAction';
+import {approveLoan} from '../redux/userActions';
 
 const AdminDashboard = () => {
     const dispatch = useDispatch();
     const {loans} = useSelector(state => state.loan);
-    const {user} = useSelector(state => state.auth);
+    const {user} = useSelector(state => state.user);
 
     useEffect(() => {
         dispatch(getLoans());
