@@ -8,7 +8,7 @@ import Loader from '../components/Loader';
 const Register = () => {
    
   const navigate = useNavigate();
-  const useDispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const {loading, isAuthenticated, error} = useSelector(state => state.user);
 
@@ -84,7 +84,7 @@ const Register = () => {
                       className='border-none p-2 rounded-md bg-[#edf5f3] my-1 text-md' />
                       </div>
 
-                      <button type='submit' className='border-none mt-2 text-white py-2 px-5 bg-slate-600 font-bold cursor-pointer' onClick={handleSubmit} >
+                      <button type='submit' className='border-none mt-2 text-white py-2 px-5 bg-slate-600 font-bold cursor-pointer'>
                           SignUp
                       </button>
                       <hr className=' mt-4 w-[120%] border-slate-300' />

@@ -1,17 +1,14 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const app = express();
 const cors = require('cors');
-require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const userRoute = require('./routes/userRoute');
 const bodyParser = require("body-parser");
-const errorMiddleware = require('./middleware/error');
-const Connection = require("./config/db");
+const errorMiddleware = require('./middleware/error');;
 
+require('dotenv').config();
 
 app.use(cookieParser());
-
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({
   limit: '50mb',
@@ -20,8 +17,11 @@ app.use(bodyParser.urlencoded({
 })
 );
 
+
 app.use(cors());
-app.use('/api/v1', userRoute);
+app.use("/api/v1", userRoute);
+
+const Connection = require("./config/db");
 
 
 process.on("uncaughtException", (err) => {
@@ -44,20 +44,20 @@ const server = app.listen(port, () => {
 })
 
 
-app.use(cors({
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+const corsOptions = {
+    origin: '*',
+    optionSuccessStatue: 200,
     credentials: true
-}));
+};
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true}));
-app.use("trust proxy", 1);
+app.set("trust proxy", 1);
 
 app.use(errorMiddleware);
 
-process.on("unhandeledRejection", (err) => {
+process.on("unhandledRejection", (err) => {
   console.log(`Error ${err.message}`);
   console.log(`Shutting down the server due to unhandled Promise Rejection.`);
 

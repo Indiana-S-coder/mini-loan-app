@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, login, register} from "../redux/userActions";
+import { clearErrors, login} from "../redux/userActions";
 import Loader from '../components/Loader';
 
 
@@ -13,7 +13,7 @@ const Login = () => {
   const [loginEmail, setEmail] = useState("");
   const [loginPassword, setPassword] = useState(""); 
 
-  const handleClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(loginEmail, loginPassword))
   };
@@ -63,7 +63,7 @@ const Login = () => {
                       className='border-none p-2 rounded-md bg-[#edf5f3] my-1 text-md' />
                       </div>
 
-                      <button type='submit' className='border-none mt-2 text-white py-2 px-5 bg-slate-600 font-bold cursor-pointer' onClick={handleClick}>
+                      <button type='submit' className='border-none mt-2 text-white py-2 px-5 bg-slate-600 font-bold cursor-pointer'>
                           Login
                       </button>
                       <hr className='mt-5 w-[120%] h-1 border-slate-300'/>

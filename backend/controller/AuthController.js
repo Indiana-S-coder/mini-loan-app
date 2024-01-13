@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
-const ErrorHandler = require('../util/errorHandler');
-const {createSecretToken} = require('../util/SecretToken');
+const ErrorHandler = require('../util/errorhandler');
+const sendToken = require('../util/SecretToken');
 
 
 exports.Signup = catchAsyncErrors(async(req, res, next) => {
@@ -39,7 +39,7 @@ exports.Login = catchAsyncErrors(async(req, res, next) => {
         sendToken(user, 200, res);
     });
 
-    exports.logOut = catchAsyncErrors(async(req, res, next) => {
+    exports.Logout = catchAsyncErrors(async(req, res, next) => {
         res.cookie("token", null, {
             expires: new Date(Date.now()),
             httpOnly: true

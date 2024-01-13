@@ -1,6 +1,6 @@
-const ErrorHandler = require("../utils/ErrorHandler");
+const ErrorHandler = require("../util/errorhandler");
 
-modules.exports = (err, req, res, next) => {
+module.exports = (err, req, res, next) => {
     // Error in development mode
     err.statusCode = err.statusCode || 500;
     err.message = err.message || "Internal Server Error";

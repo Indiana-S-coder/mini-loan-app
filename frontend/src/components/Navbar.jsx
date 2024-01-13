@@ -1,10 +1,10 @@
 import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const {auth, isAuth} = useSelector(state => state.auth);
+    const {user, isAuth} = useSelector((state) => state.user);
 
   return (
     <>
@@ -13,9 +13,9 @@ const Navbar = () => {
             <Link to='/' ><span className=' text-slate-500 text-3xl font-600' >MLA</span></Link>
         </div>
 
-        {isAuth} ? (
+        {isAuth ? (
           <div>
-            <span className='text-lg text-red-400'>Hi, {auth?.name}!</span>
+            <span className='text-lg text-red-400'>Hi, {user?.name}!</span>
             <button className='px-2 py-1 bg-slate-600 text-white mx-1 rounded-md' onClick={() => navigate('/')}>Logout</button>
           </div>
         ) : (
@@ -23,9 +23,9 @@ const Navbar = () => {
             <button className='px-2 py-1 bg-slate-600 text-white mx-1 rounded-md' onClick={() => navigate('/login')}>Login</button>
             <button className='px-2 py-1 bg-slate-600 text-white mx-1 rounded-md' onClick={() => navigate('/register')}>SignUp</button>
         </div>
+        )}
     </div>
 
-    )
     <hr className='w-[100%] '/>
     </>
   )
