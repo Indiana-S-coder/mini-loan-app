@@ -7,17 +7,23 @@ const catchAsyncErrors = require("./catchAsyncErrors");
 exports.isAuthenticatedUser = catchAsyncErrors(async(req, res, next) => {
     const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
     console.log(token)
-    if(!token){
-        return next(new ErrorHandler("Please login to continue", 401))
+    if (!token) {
+        return res.status(401).json({
+            success: false,
+            message: "Please login to continue"
+        });
     }
 
-    try {const decodeData = jwt.verify(token, process.env.TOKEN_KEY);
-    
-    req.user = await User.findById(decodeData.id);
-    next();
-}catch (error){
-    return next(new ErrorHandler("Invalid token. Please login again", 401))
-}
+    try {
+        const decodeData = jwt.verify(token, process.env.TOKEN_KEY);
+        req.user = await User.findById(decodeData.id);
+        next();
+    } catch (error) {
+        return res.status(401).json({
+            success: false,
+            message: "Invalid token. Please login again"
+        });
+    }
 });
 
 exports.authorizeRoles = (...roles) => {

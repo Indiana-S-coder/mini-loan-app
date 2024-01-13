@@ -8,7 +8,9 @@ import {
     REGISTER_USER_FAIL,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
-    
+    LOAN_APPROVAL_REQUEST,
+    LOAN_APPROVAL_SUCCESS,
+    LOAN_APPROVAL_FAILURE,
 } from './userTypes';
 
 
@@ -75,3 +77,18 @@ const initialState = {
     error: null,
 }
 
+export const adminloanReducer = (state = initialState, action) => {
+    switch (action.type) {
+      case LOAN_APPROVAL_REQUEST:
+        return { ...state, loading: true };
+  
+      case LOAN_APPROVAL_SUCCESS:
+        return { ...state, loading: false, loan: action.payload, error: null };
+  
+      case LOAN_APPROVAL_FAILURE:
+        return { ...state, loading: false, loan: null, error: action.payload };
+  
+      default:
+        return state;
+    }
+  };

@@ -84,6 +84,34 @@ export const logout = () => async (dispatch) => {
     }
 }
 
+export const approveLoanRequest = () => ({
+    type: LOAN_APPROVAL_REQUEST,
+  });
+  
+  export const approveLoanSuccess = (loan) => ({
+    type: LOAN_APPROVAL_SUCCESS,
+    payload: loan,
+  });
+  
+  export const approveLoanFailure = (error) => ({
+    type: LOAN_APPROVAL_FAILURE,
+    payload: error,
+  });
+  
+  // Action to approve a loan
+  export const approveLoan = (loanId) => async (dispatch) => {
+    try {
+      dispatch(approveLoanRequest());
+  
+      // Send a request to your backend API to update the loan state
+      const response = await axios.put(`/api/v1/loan/approve/${loanId}`);
+      console.log(response.data)
+  
+      dispatch(approveLoanSuccess(response.data.loan));
+    } catch (error) {
+      dispatch(approveLoanFailure(error.response.data.message));
+    }
+  };
 // Clear Errors
 
 export const clearErrors = () => async (dispatch) => {

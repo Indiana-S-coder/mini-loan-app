@@ -9,9 +9,37 @@ import {
 
 import axios from "axios";
 
+const getToken = () => localStorage.getItem("token");
+
+// Axios instance with common configurations
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:4000/api/v1/",
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}` // Include the token in the Authorization header
+    }
+});
+
+// Function to update the headers if the token changes
+const updateHeaders = () => {
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
+};
+
+// Interceptor to update the headers before each request
+axiosInstance.interceptors.request.use(
+    (config) => {
+        updateHeaders();
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+
 export const getLoans = () => dispatch => {
     dispatch(setItemsLoading());
-    axios.get(`http://localhost:4000/api/v1/loan`)
+    axiosInstance.get("loan")
         .then((res) =>
             dispatch({
                 type: GET_LOANS,
@@ -22,7 +50,7 @@ export const getLoans = () => dispatch => {
 
 export const getLoan = (id) => (dispatch) => {
     dispatch(setItemsLoading());
-    axios.get(`http://localhost:4000/api/v1/loan/${id}`)
+    axiosInstance.get(`loan/${id}`)
         .then((res) =>
             dispatch({
                 type: GET_LOAN,
@@ -33,7 +61,7 @@ export const getLoan = (id) => (dispatch) => {
 
 export const createLoan = (loan) => (dispatch) => {
     dispatch(setItemsLoading());
-    axios.post(`http://localhost:4000/api/v1/new/loan`, loan)
+    axiosInstance.post(`new/loan`, loan)
         .then((res) =>
             dispatch({
                 type: ADD_LOAN,
@@ -44,7 +72,7 @@ export const createLoan = (loan) => (dispatch) => {
 
 export const payLoan = (pay) => (dispatch) => {
     dispatch(setItemsLoading());
-    axios.put(`http://localhost:4000/api/v1/loan/${pay._id}`, pay)
+    axiosInstance.put(`loan/${pay._id}`, pay)
         .then((res) =>
             dispatch({
                 type: PAY_LOAN,
@@ -55,7 +83,7 @@ export const payLoan = (pay) => (dispatch) => {
 
 export const getPaymentHistory = (id) => (dispatch) => {
     dispatch(setItemsLoading());
-    axios.get(`http://localhost:4000/api/v1/history/${id}`)
+    axiosInstance.get(`history/${id}`)
         .then((res) =>
             dispatch({
                 type: GET_PAYMENT_HISTORY,

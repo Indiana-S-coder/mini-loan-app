@@ -7,7 +7,6 @@ const sendToken = require('../util/SecretToken');
 exports.Signup = catchAsyncErrors(async(req, res, next) => {
     
     const {userName, email, password} = req.body;
-    console.log(req.body);
     const user = await User.create({
         userName,
         email,
