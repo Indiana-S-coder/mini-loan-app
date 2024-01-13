@@ -17,6 +17,10 @@ function Home() {
     }
   }, [isAuthenticated, dispatch]);
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate("/admin/dashboard");
+  };
 
   return (
     <>
@@ -35,6 +39,13 @@ function Home() {
                 <div className='pl-10'>
                   <button className='w-40 h-40 border-slate-600 bg-slate-400 rounded-full' onClick={() => navigate('/loan')}>Repay loan</button>
                 </div>
+                {user.role === 'admin' && (
+              <div className='pl-10'>
+                <button className='w-40 h-40 border-slate-600 bg-slate-400 rounded-full' onClick={handleClick}>
+                  Admin Dashboard
+                </button>
+              </div>
+            )}
               </div>
             </div>
           ) : (
