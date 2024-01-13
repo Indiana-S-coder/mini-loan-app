@@ -13,7 +13,7 @@ const initialState = {
     loans: [],
     payments: [],
     loading: false,
-}
+};
 
 export const loanReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -21,18 +21,18 @@ export const loanReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loans: action.payload,
-            }
+            };
         
         case GET_LOAN:
             return {
                 ...state,
                 loan: action.payload,
-            }
+            };
         
         case ADD_LOAN:
             return {
                 ...state,
-                loans: [action.payload, ...state.loans]
+                loans: [...state.loans, action.payload]
             }
 
         case PAY_LOAN:
@@ -61,7 +61,7 @@ export const loanReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true
-            }
+            };
         
         default:
             return state;

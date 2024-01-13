@@ -11,21 +11,19 @@ import axios from "axios";
 
 export const getLoans = () => dispatch => {
     dispatch(setItemsLoading());
-    axios
-        .get(`/api/v1/loan`)
-        .then(res =>
+    axios.get(`http://localhost:4000/api/v1/loan`)
+        .then((res) =>
             dispatch({
                 type: GET_LOANS,
-                payload: res.data
+                payload: res.data,
             })
         )
 };
 
 export const getLoan = (id) => (dispatch) => {
     dispatch(setItemsLoading());
-    axios
-        .get(`/api/v1/loan/${id}`)
-        .then(res =>
+    axios.get(`http://localhost:4000/api/v1/loan/${id}`)
+        .then((res) =>
             dispatch({
                 type: GET_LOAN,
                 payload: res.data
@@ -35,21 +33,19 @@ export const getLoan = (id) => (dispatch) => {
 
 export const createLoan = (loan) => (dispatch) => {
     dispatch(setItemsLoading());
-    axios
-        .post(`/api/v1/new/loan`, loan)
-        .then(res =>
+    axios.post(`http://localhost:4000/api/v1/new/loan`, loan)
+        .then((res) =>
             dispatch({
                 type: ADD_LOAN,
-                payload: res.data
+                payload: res.data,
             })
         )
 };
 
 export const payLoan = (pay) => (dispatch) => {
     dispatch(setItemsLoading());
-    axios
-        .put(`/api/v1/loan/${pay._id}`, pay)
-        .then(res =>
+    axios.put(`http://localhost:4000/api/v1/loan/${pay._id}`, pay)
+        .then((res) =>
             dispatch({
                 type: PAY_LOAN,
                 payload: res.data
@@ -59,9 +55,8 @@ export const payLoan = (pay) => (dispatch) => {
 
 export const getPaymentHistory = (id) => (dispatch) => {
     dispatch(setItemsLoading());
-    axios
-        .get(`/api/v1/history/${id}`)
-        .then(res =>
+    axios.get(`http://localhost:4000/api/v1/history/${id}`)
+        .then((res) =>
             dispatch({
                 type: GET_PAYMENT_HISTORY,
                 payload: res.data

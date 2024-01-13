@@ -22,7 +22,7 @@ const Navbar = () => {
 
         {isAuthenticated ? (
            <div className='flex justify-between items-center'>
-            <span className='px-1 text-md text-red-400 font-semibold'>Hi, {user?.username} !</span>
+            <span className='px-1 text-md text-red-400 font-semibold'>Hi, {user?.userName} !</span>
             <button className='px-2.5 py-1 bg-slate-600 text-white mx-1 rounded-md ' onClick={handleLogout}>Logout</button>
           </div>
         
