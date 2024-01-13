@@ -25,8 +25,8 @@ app.use("/api/v1", userRoute);
 
 const corsOptions = {
     origin: '*',
+    credentials: true,
     optionSuccessStatue: 200,
-    credentials: true
 };
 
 app.use(cors(corsOptions));

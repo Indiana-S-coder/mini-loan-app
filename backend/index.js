@@ -2,7 +2,7 @@ const app = require("./app.js")
 
 require('dotenv').config();
 
-const Connection = require("./config/db");
+const Connection = require("./config/db.js");
 
 
 process.on("uncaughtException", (err) => {
