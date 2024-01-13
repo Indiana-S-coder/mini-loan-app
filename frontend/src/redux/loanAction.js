@@ -39,7 +39,7 @@ axiosInstance.interceptors.request.use(
 
 export const getLoans = () => dispatch => {
     dispatch(setItemsLoading());
-    axiosInstance.get("loan")
+    axiosInstance.get(`loan`)
         .then((res) =>
             dispatch({
                 type: GET_LOANS,

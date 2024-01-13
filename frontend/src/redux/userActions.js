@@ -113,7 +113,7 @@ export const approveLoanRequest = () => ({
       dispatch(approveLoanRequest());
   
       // Send a request to your backend API to update the loan state
-      const response = await axios.put(`/api/v1/loan/approve/${loanId}`);
+      const response = await axiosUserInstance.put(`loan/approve/${loanId}`);
       console.log(response.data)
   
       dispatch(approveLoanSuccess(response.data.loan));
