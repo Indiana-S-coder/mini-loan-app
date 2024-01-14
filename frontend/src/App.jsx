@@ -7,7 +7,7 @@ import Register from './pages/Register'
 import ApplyLoan from './pages/ApplyLoan'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminDashboard from './components/AdminDashboard'
-import Repay from './components/Repay'
+import Repay from './components/RepayLoan'
 import LoanList from './components/LoanList'
 
 

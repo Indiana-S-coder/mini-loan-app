@@ -11,13 +11,13 @@ const {
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/AuthMiddleware');
 
-router.post('/new/loan', isAuthenticatedUser, createLoan);
-router.get('/loans', isAuthenticatedUser, getAllLoans);
-router.get('/loan/:id', isAuthenticatedUser, getLoanDetails);
-router.put('/loan/:id', isAuthenticatedUser, updateLoan);
-router.get('/history/:id', isAuthenticatedUser, getPaymentHistory);
+router.route('/new/loan').post( isAuthenticatedUser, createLoan);
+router.route('/loans').get( isAuthenticatedUser, getAllLoans);
+router.route('/loan/:id').get( isAuthenticatedUser, getLoanDetails);
+router.route('/loan/:id').put( isAuthenticatedUser, updateLoan);
+router.route('/history/:id').get(isAuthenticatedUser, getPaymentHistory);
 
 // only admin can approve loan
-router.put('.loan/approve/:id', isAuthenticatedUser, authorizeRoles('admin'), approveLoan);
+router.route('/loan/approve/:id').put( isAuthenticatedUser, authorizeRoles('admin'), approveLoan);
 
 module.exports = router;

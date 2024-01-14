@@ -19,18 +19,18 @@ app.use(bodyParser.urlencoded({
 })
 );
 
-app.use(cors());
+const corsOptions = {
+    origin: '*',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    credentials: true,
+    optionSuccessStatus: 200,
+};
+
+
+app.use(cors(corsOptions));
 app.use("/api/v1", loanRoute);
 app.use("/api/v1", userRoute);
 
-const corsOptions = {
-    origin: '*',
-    credentials: true,
-    optionSuccessStatue: 200,
-};
-
-app.use(cors(corsOptions));
-app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true}));
 app.set("trust proxy", 1);
 

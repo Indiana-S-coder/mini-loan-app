@@ -36,9 +36,9 @@ const Register = () => {
       dispatch(clearErrors());
     }
 
-    if(!isAuthenticated === true){
-      navigate("/");
-    }
+    // if(!isAuthenticated === true){
+    //   navigate("/");
+    // }
   }, [dispatch, error, isAuthenticated, navigate]);
 
   return (

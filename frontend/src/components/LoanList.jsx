@@ -15,13 +15,13 @@ const LoanList = () => {
 
     return (
         <>
-            <h1 className="my-5 font-bold font-xl text-center">Loan Details</h1>
+            <h1 className="my-5 font-bold text-xl text-center">Loan Details</h1>
             <Card className=" mb-5">
         <CardBody className="text-center">
           <Row>
             <Col md="4">
               <h3>{loans?.loans?.length}</h3>
-              <div>Total Loans</div>
+              <div className='font-semibold'>Total Loans</div>
             </Col>
             <Col md="4">
               <h3>
@@ -34,14 +34,14 @@ const LoanList = () => {
                       minimumFractionDigits: 2,
                     })}
               </h3>
-              <div>Total Balance</div>
+              <div className='font-semibold mb-2'>Total Balance</div>
             </Col>
             <Col md="4">
               <Link
                 to="/loan"
                 size="lg"
                 color="secondary"
-                className="btn btn-success btn-lg"
+                className="my-2 bg-slate-500 text-white py-2 px-3 rounded-lg btn-success btn-lg"
               >
                 Add new Loan
               </Link>
@@ -50,16 +50,17 @@ const LoanList = () => {
         </CardBody>
       </Card>
 
+      <div className='ml-32 mb-10'>
       <Table striped>
         <thead>
-          <tr>
-            <th>Date Applied</th>
-            <th>Full Name</th>
-            <th>Term</th>
-            <th>Loan Status</th>
-            <th>Loan Amount</th>
-            <th>Loan Balance</th>
-            <th>Weekly Payment</th>
+          <tr className=''>
+            <th className='px-5'>Date Applied</th>
+            <th className='px-5'>Full Name</th>
+            <th className='px-5'>Term</th>
+            <th className='px-5'>Loan Status</th>
+            <th className='px-5'>Loan Amount</th>
+            <th className='px-5'>Loan Balance</th>
+            <th className='px-5'>Weekly Payment</th>
             <th></th>
           </tr>
         </thead>
@@ -111,10 +112,11 @@ const LoanList = () => {
                 </td>
               </tr>
             )
-          )}
+            )}
         </tbody>
       </Table>
-      <Link to="/" className="btn btn-outline-secondary">
+    </div>
+      <Link to="/" className="bg-slate-500 rounded-lg py-2 px-3 ml-20 ">
         Back
       </Link>
         </>

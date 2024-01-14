@@ -5,6 +5,7 @@ import Loader from '../components/Loader'
 import {useSelector, useDispatch} from 'react-redux'
 import {clearErrors} from '../redux/userActions'
 
+
 function Home() {
   const navigate = useNavigate();
   const {loading} = useSelector((state) => state.user);
@@ -37,7 +38,7 @@ function Home() {
                   <button className='w-40 h-40 border-slate-600 bg-slate-400 rounded-full' onClick={() => navigate('/loan')}>Apply for loan</button>
                 </div>
                 <div className='pl-10'>
-                  <button className='w-40 h-40 border-slate-600 bg-slate-400 rounded-full' onClick={() => navigate('/loan')}>Repay loan</button>
+                  <button className='w-40 h-40 border-slate-600 bg-slate-400 rounded-full' onClick={() => navigate('/all-loans/')}>Repay loan</button>
                 </div>
                 {user.role === 'admin' && (
               <div className='pl-10'>

@@ -32,8 +32,8 @@ export const loanReducer = (state = initialState, action) => {
         case ADD_LOAN:
             return {
                 ...state,
-                loans: [...state.loans, action.payload]
-            }
+                loans: [...state.loans, action.payload],
+            };
 
         case PAY_LOAN:
             return {

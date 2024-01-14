@@ -15,31 +15,39 @@ import {
 
 import axios from 'axios';
 
-const axiosUserInstance = axios.create({
-    baseURL: "http://localhost:4000/api/v1/",
-    headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
+// const axiosUserInstance = axios.create({
+//     baseURL: "http://localhost:4000/api/v1/",
+//     headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// });
 
-// Interceptor to update the headers before each request
-axiosUserInstance.interceptors.request.use(
-    (config) => {
-        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
+// // Interceptor to update the headers before each request
+// axiosUserInstance.interceptors.request.use(
+//     (config) => {
+//         config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+//         return config;
+//     },
+//     (error) => {
+//         return Promise.reject(error);
+//     }
+// );
 // Login
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: LOGIN_REQUEST })
 
-        const { data } = await axiosUserInstance.post(`login`, { email, password })
-        localStorage.setItem('token', data.token);
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        // const { data } = await axiosUserInstance.post(`login`, { email, password })
+        // localStorage.setItem('token', data.token);
+        
+        const { data } = await axios.post(`http://localhost:4000/api/v1/login`, { email, password }, config)
         
         dispatch({
             type: LOGIN_SUCCESS,
@@ -60,8 +68,17 @@ export const register = (userData) => async (dispatch) => {
     try {
         dispatch({ type: REGISTER_USER_REQUEST })
 
-        const { data } = await axiosUserInstance.post(`register`, userData)
-        localStorage.setItem('token', data.token);
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        // const { data } = await axiosUserInstance.post(`register`, userData)
+        // localStorage.setItem('token', data.token);
+
+        const { data } = await axios.post(`http://localhost:4000/api/v1/register`, userData, config)
+
         dispatch({
             type: REGISTER_USER_SUCCESS,
             payload: data.user
@@ -78,8 +95,8 @@ export const register = (userData) => async (dispatch) => {
 // Logout user
 export const logout = () => async (dispatch) => {
     try {
-        localStorage.removeItem('token');
-        await axios.get(`/api/v1/logout`)
+        // localStorage.removeItem('token');
+        await axios.get(`http://localhost:4000/api/v1/logout`)
 
         dispatch({
             type: LOGOUT_SUCCESS
@@ -113,8 +130,9 @@ export const approveLoanRequest = () => ({
       dispatch(approveLoanRequest());
   
       // Send a request to your backend API to update the loan state
-      const response = await axiosUserInstance.put(`loan/approve/${loanId}`);
-      console.log(response.data)
+    //   const response = await axiosUserInstance.put(`loan/approve/${loanId}`);
+    const response = await axios.put(`http://localhost:4000/api/v1/loan/approve/${loanId}`);  
+    console.log(response.data)
   
       dispatch(approveLoanSuccess(response.data.loan));
     } catch (error) {
