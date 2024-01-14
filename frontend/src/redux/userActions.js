@@ -41,7 +41,7 @@ export const login = (email, password) => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
         }
 
         // const { data } = await axiosUserInstance.post(`login`, { email, password })
@@ -71,7 +71,8 @@ export const register = (userData) => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            
         }
 
         // const { data } = await axiosUserInstance.post(`register`, userData)

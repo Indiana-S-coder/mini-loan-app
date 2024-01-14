@@ -68,9 +68,7 @@ const LoanList = () => {
           {loans.loans?.map(
             ({
               _id,
-              name,
               loan_balance,
-              loan_type,
               status,
               loan_amount,
               loan_term,

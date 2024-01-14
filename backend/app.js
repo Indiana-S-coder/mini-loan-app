@@ -8,6 +8,10 @@ const bodyParser = require("body-parser");
 const errorMiddleware = require('./middleware/error');
 
 require('dotenv').config();
+app.use(express.json());
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({ path: "backend/config/config.env" });
+}
 
 app.use(cookieParser());
 
@@ -20,7 +24,7 @@ app.use(bodyParser.urlencoded({
 );
 
 const corsOptions = {
-    origin: '*',
+    origin: "*",
     methods: ['GET', 'POST', 'OPTIONS'],
     credentials: true,
     optionSuccessStatus: 200,
