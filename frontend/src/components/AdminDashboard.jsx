@@ -4,28 +4,31 @@ import {Table} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import {getLoans} from '../redux/loanAction';
 import {approveLoan} from '../redux/userActions';
+import Moment from 'react-moment';
 
 const AdminDashboard = () => {
     const dispatch = useDispatch();
     const {loans} = useSelector(state => state.loan);
     const {user} = useSelector(state => state.user);
-
+    const token = localStorage.getItem('token');
     useEffect(() => {
-        dispatch(getLoans());
+        dispatch(getLoans(token));
     }, [dispatch]);
 
     const handleApproveLoan = (id) => {
-        dispatch(approveLoan(id));
+        dispatch(approveLoan(id, token));
     }
 
     return (
         <>
-            <h1 className='text-center'>Admin Dashboard</h1>
+            <h1 className='font-bold text-xl my-10 text-center'>Admin Dashboard</h1>
+            <div className="flex justify-center">
+
             <Table striped>
             <thead>
                 <tr>
                     <th>Date Applied</th>
-                    <th>Full Name</th>
+                    <th>Name</th>
                     <th>Term</th>
                     <th>Loan Status</th>
                     <th></th>
@@ -38,7 +41,7 @@ const AdminDashboard = () => {
             {loans.loans?.map(
             ({
               _id,
-
+              
               loan_balance,
 
               status,
@@ -48,27 +51,27 @@ const AdminDashboard = () => {
               weekly_payment,
             }) => (
               <tr key={_id}>
-                <td>
+                <td className='px-2'>
                   <Moment format="YYYY-MM-DD HH:mm">{date_applied}</Moment>
                 </td>
-                <td>{user.name}</td>
-                <td>{loan_term} months</td>
-                   <td>{status ? "APPROVED" : "PENDING"}</td>
-                <td>
+                <td>{user.userName}</td>
+                <td className='px-2'>{loan_term} weeks</td>
+                <td className='px-2'>{status ? "APPROVED" : "PENDING"}</td>
+                <td className='px-2'>
                   {status === "PENDING" && (
-                    <button onClick={() => handleApproveLoan(_id)}>
+                    <button className="text-white bg-slate-500 my-1" onClick={() => handleApproveLoan(_id)}>
                       APPROVE
                     </button>
                   )}
                 </td>
-                <td>
+                <td className='px-2'>
                   ${" "}
                   {loan_amount?.toLocaleString("en-US", {
                     maximumFractionDigits: 2,
                     minimumFractionDigits: 2,
                   })}
                 </td>
-                <td>
+                <td className='px-2'>
                   ${" "}
                   {loan_balance?.toLocaleString("en-US", {
                     maximumFractionDigits: 2,
@@ -87,9 +90,12 @@ const AdminDashboard = () => {
           )}
         </tbody>
       </Table>
-      <Link to="/" className="btn btn-outline-secondary">
+    </div>
+    <div className='text-center mt-5'>
+      <Link to="/" className="text-white px-2 py-1 rounded-lg bg-slate-500 ">
         Back
       </Link>
+    </div>
         </>
     )
 }

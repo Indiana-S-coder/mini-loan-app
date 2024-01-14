@@ -45,9 +45,9 @@ export const login = (email, password) => async (dispatch) => {
         }
 
         // const { data } = await axiosUserInstance.post(`login`, { email, password })
-        // localStorage.setItem('token', data.token);
         
         const { data } = await axios.post(`http://localhost:4000/api/v1/login`, { email, password }, config)
+        localStorage.setItem('token', data.token);
         
         dispatch({
             type: LOGIN_SUCCESS,
@@ -126,13 +126,16 @@ export const approveLoanRequest = () => ({
   });
   
   // Action to approve a loan
-  export const approveLoan = (loanId) => async (dispatch) => {
+  export const approveLoan = (loanId, token) => async (dispatch) => {
     try {
       dispatch(approveLoanRequest());
   
       // Send a request to your backend API to update the loan state
-    //   const response = await axiosUserInstance.put(`loan/approve/${loanId}`);
-    const response = await axios.put(`http://localhost:4000/api/v1/loan/approve/${loanId}`);  
+    const response = await axios.put(`http://localhost:4000/api/v1/loan/approve/${loanId}`, null,{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      });  
     console.log(response.data)
   
       dispatch(approveLoanSuccess(response.data.loan));

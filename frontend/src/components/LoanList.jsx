@@ -3,14 +3,15 @@ import { Row, Col, Card, CardBody, Table } from "reactstrap";
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLoans } from '../redux/loanAction';
+import Moment from 'react-moment';
 
 const LoanList = () => {
     const dispatch = useDispatch();
     const { loans } = useSelector((state) => state.loan);
     const { user } = useSelector((state) => state.user);
-
+    const token = localStorage.getItem("token");
     useEffect(() => {
-        dispatch(getLoans());
+        dispatch(getLoans(token));
     }, [dispatch]);
 
     return (
@@ -53,14 +54,13 @@ const LoanList = () => {
       <div className='ml-32 mb-10'>
       <Table striped>
         <thead>
-          <tr className=''>
-            <th className='px-5'>Date Applied</th>
-            <th className='px-5'>Full Name</th>
-            <th className='px-5'>Term</th>
-            <th className='px-5'>Loan Status</th>
-            <th className='px-5'>Loan Amount</th>
-            <th className='px-5'>Loan Balance</th>
-            <th className='px-5'>Weekly Payment</th>
+          <tr className='h-1'>
+            <th className='px-1 mx-1'>Date Applied</th>
+            <th className='px-1 mx-1'>Term</th>
+            <th className='px-1 mx-1'>Loan Status</th>
+            <th className='px-1 mx-1'>Loan Amount</th>
+            <th className='px-1 mx-1'>Loan Balance</th>
+            <th className='px-1 mx-1'>Weekly Payment</th>
             <th></th>
           </tr>
         </thead>
@@ -76,27 +76,26 @@ const LoanList = () => {
               weekly_payment,
             }) => (
               <tr key={_id}>
-                <td>
+                <td className='px-2'>
                   <Moment format="YYYY-MM-DD HH:mm">{date_applied}</Moment>
                 </td>
-                <td>{user.name}</td>
-                <td>{loan_term} months</td>
-                <td>{status}</td>
-                <td>
+                <td className='px-2'>{loan_term} months</td>
+                <td className='px-2'>{status}</td>
+                <td className='px-2'>
                   ${" "}
                   {loan_amount?.toLocaleString("en-US", {
                     maximumFractionDigits: 2,
                     minimumFractionDigits: 2,
                   })}
                 </td>
-                <td>
+                <td className='px-2'>
                   ${" "}
                   {loan_balance?.toLocaleString("en-US", {
                     maximumFractionDigits: 2,
                     minimumFractionDigits: 2,
                   })}
                 </td>
-                <td>
+                <td className='px-2'>
                   ${" "}
                   {weekly_payment?.toLocaleString("en-US", {
                     maximumFractionDigits: 5,
@@ -114,7 +113,7 @@ const LoanList = () => {
         </tbody>
       </Table>
     </div>
-      <Link to="/" className="bg-slate-500 rounded-lg py-2 px-3 ml-20 ">
+      <Link to="/" className="bg-slate-500 text-white rounded-lg py-2 px-3 ml-20 ">
         Back
       </Link>
         </>

@@ -13,9 +13,10 @@ import { createLoan } from "../redux/loanAction";
 const ApplyLoan = () => {
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
-  const [loanStatus, setLoanStatus] = useState("PENDING");
-
+  const [loanStatus, setLoanStatus] = useState("PENDING"); 
   const { user } = useSelector((state) => state.user);
+  
+  console.log(user);
 
   const [loanData, setLoanData] = useState({
     loan_amount: "",
@@ -34,6 +35,8 @@ const ApplyLoan = () => {
     setLoanData({ ...loanData, [name]: parseFloat(value) || 0 });
   };
 
+  const token = localStorage.getItem("token");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -47,7 +50,7 @@ const ApplyLoan = () => {
       newLoan.status = loanStatus;
     }
 
-    dispatch(createLoan(newLoan));
+    dispatch(createLoan(newLoan, token));
     toggle();
   };
 

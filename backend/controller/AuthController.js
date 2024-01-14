@@ -29,10 +29,11 @@ exports.Login = catchAsyncErrors(async(req, res, next) => {
             }
             
             const isPasswordMatched = await user.comparePassword(password);
-    
+            console.log(isPasswordMatched);
             if(!isPasswordMatched){
                 return next(new ErrorHandler('Incorrect password', 401));
             }
+            console.log(user);
             sendToken(user, 200, res);
         
     });

@@ -4,15 +4,13 @@ const ErrorHandler = require("../util/errorhandler");
 const catchAsyncErrors = require("./catchAsyncErrors");
 
 exports.isAuthenticatedUser = catchAsyncErrors(async(req, res, next) => {
-    console.log(req.cookies.token);
-    const token  = req.cookies.token;
+    const token  = req.headers.authorization && req.headers.authorization.split(" ")[1];
     console.log('token: ',token)
+   
     if (token) {
     try {
-        const decodeData = jwt.verify(token, process.env.TOKEN_KEY);
-        console.log(decodeData);
+        const decodeData = await jwt.verify(token, process.env.TOKEN_KEY); 
         req.user = await User.findById(decodeData._id);
-        console.log(req.user);
         next();
     } catch (error) {
         return res.status(401).json({

@@ -41,10 +41,10 @@ userSchema.pre("save", async function (next) {
   //JWT token
   userSchema.methods.getJWTToken = function () {
     console.log(this._id)
-    const token = jwt.sign({_id:this._id.toString()}, process.env.TOKEN_KEY,{
+    const token = jwt.sign({_id:this._id}, process.env.TOKEN_KEY,{
         expiresIn: process.env.JWT_EXPIRE
     });
-    console.log(token);
+    //console.log(token);
     return token;
   }
 

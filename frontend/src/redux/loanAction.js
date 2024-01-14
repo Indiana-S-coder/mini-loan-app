@@ -36,11 +36,14 @@ import axios from "axios";
 //     }
 // );
 
-
-export const getLoans = () => dispatch => {
+export const getLoans = (token) => dispatch => {
     dispatch(setItemsLoading());
     // axiosInstance.get(`loan`)
-    axios.get("http://localhost:4000/api/v1/loans")
+    axios.get("http://localhost:4000/api/v1/loans", {
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
         .then((res) =>{
             dispatch({
                 type: GET_LOANS,
@@ -49,10 +52,14 @@ export const getLoans = () => dispatch => {
        } )
 };
 
-export const getLoan = (id) => (dispatch) => {
+export const getLoan = (id, token) => (dispatch) => {
     dispatch(setItemsLoading());
     // axiosInstance.get(`loan/${id}`)
-    axios.get(`http://localhost:4000/api/v1/loan/${id}`)
+    axios.get(`http://localhost:4000/api/v1/loan/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
         .then((res) =>{
             dispatch({
                 type: GET_LOAN,
@@ -61,10 +68,14 @@ export const getLoan = (id) => (dispatch) => {
         })
 };
 
-export const createLoan = (loan) => (dispatch) => {
+export const createLoan = (loan, token) => (dispatch) => {
     dispatch(setItemsLoading());
     // axiosInstance.post(`new/loan`, loan)
-    axios.post(`http://localhost:4000/api/v1/new/loan`, loan)
+    axios.post(`http://localhost:4000/api/v1/new/loan`, loan , {
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
         .then((res) =>{
             dispatch({
                 type: ADD_LOAN,
@@ -73,10 +84,14 @@ export const createLoan = (loan) => (dispatch) => {
         })
 };
 
-export const payLoan = (pay) => (dispatch) => {
+export const payLoan = (pay, token) => (dispatch) => {
     dispatch(setItemsLoading());
     // axiosInstance.put(`loan/${pay._id}`, pay)
-    axios.put(`http://localhost:4000/api/v1/loan/${pay._id}`, pay)
+    axios.put(`http://localhost:4000/api/v1/loan/${pay._id}`, pay,{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
         .then((res) =>{
             dispatch({
                 type: PAY_LOAN,
@@ -85,10 +100,14 @@ export const payLoan = (pay) => (dispatch) => {
        } )
 };
 
-export const getPaymentHistory = (id) => (dispatch) => {
+export const getPaymentHistory = (id, token) => (dispatch) => {
     dispatch(setItemsLoading());
     // axiosInstance.get(`history/${id}`)
-    axios.get(`http://localhost:4000/api/v1/history/${id}`)
+    axios.get(`http://localhost:4000/api/v1/history/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
         .then((res) =>{
             dispatch({
                 type: GET_PAYMENT_HISTORY,

@@ -29,10 +29,10 @@ const RepayLoan = () => {
 
   const [modal, setModal] = useState(false);
   const [amountPaid, setAmountPaid] = useState("");
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    dispatch(getLoan(id));
-    dispatch(getPaymentHistory(id));
+    dispatch(getLoan(id, token));
+    dispatch(getPaymentHistory(id, token));
   }, [id, dispatch]);
 
   const toggle = () => {
@@ -58,18 +58,18 @@ const RepayLoan = () => {
   };
 
   return (
-    <div>
-      <h1 className="mb-5 text-center">Repay Loan</h1>
+    <div className="flex flex-col items-center">
+      <h1 className="mb-5 text-center text-xl font-bold mt-10">Repay Loan</h1>
       <Row>
         <Col>
           <Table striped>
             <thead>
               <tr>
                 <th></th>
-                <th>Amount Paid</th>
-                <th>Remaining Balance</th>
-                <th>Date Paid</th>
-                <th>Payment Status</th>
+                <th className="font-semibold px-2 mx-1">Amount Paid</th>
+                <th className="font-semibold px-2 mx-1">Remaining Balance</th>
+                <th className="font-semibold px-2 mx-1">Date Paid</th>
+                <th className="font-semibold px-2 mx-1">Payment Status</th>
               </tr>
             </thead>
             <tbody>
@@ -105,16 +105,18 @@ const RepayLoan = () => {
                 )}
             </tbody>
           </Table>
-          <Link to="/all-loans" className="btn btn-outline-secondary">
-            Back
-          </Link>
+          <div className="mt-4">
+            <Link to="/all-loans" className=" text-white px-2 py-1 rounded-lg bg-slate-500">
+                Back
+            </Link>
+          </div>
         </Col>
         <Col>
-          <Card>
-            <CardBody>
+          <Card >
+            <CardBody >
               <Form onSubmit={onSubmit}>
                 <FormGroup>
-                  <div className="mb-2">Your Loan Balance</div>$
+                  <div className="mb-2 font-semibold">Your Loan Balance</div>$
                   {loan
                     ? loan?.loan?.loan_balance?.toLocaleString("en-US", {
                         maximumFractionDigits: 2,
@@ -124,7 +126,7 @@ const RepayLoan = () => {
                 </FormGroup>
 
                 <FormGroup>
-                  <div className="mb-2">Weekly Payment</div>
+                  <div className="mb-2 font-semibold">Weekly Payment</div>
                   <h4>
                     $
                     {loan
@@ -136,10 +138,10 @@ const RepayLoan = () => {
                   </h4>
                 </FormGroup>
                 <hr className="my-4" />
-                <FormGroup>
-                  <div className="mb-2">Amount to Pay</div>
-                  <InputGroup size="lg">
-                    <Button>$</Button>
+                <FormGroup >
+                  <div className="font-semibold mb-2">Amount to Pay</div>
+                  <InputGroup className='border-slate-400' size="lg">
+                    <Button className="text-white">$</Button>
                     <Input
                       placeholder="Enter Amount"
                       type="number"
@@ -151,7 +153,7 @@ const RepayLoan = () => {
                   </InputGroup>
                 </FormGroup>
                 <FormGroup className="mt-4">
-                  <Button color="success" size="lg" block>
+                  <Button className="bg-slate-500 text-white rounded-lg px-2 py-1">
                     Submit
                   </Button>
                 </FormGroup>
@@ -165,7 +167,7 @@ const RepayLoan = () => {
         <ModalHeader toggle={toggle}>Payment Successful</ModalHeader>
         <ModalBody>Thank you for your payment!</ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
+          <Button className="text-white rounded-lg px-2 py-1 bg-green-600" onClick={toggle}>
             Done
           </Button>{" "}
         </ModalFooter>

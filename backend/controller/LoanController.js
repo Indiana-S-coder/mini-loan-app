@@ -8,9 +8,9 @@ const Repayment = require('../models/repayment');
 // Create a new loan
 exports.createLoan = catchAsyncErrors(async(req, res, next) => {
     const { loan_amount, loan_term } = req.body;
-    const weekly_payment = loan_amount / (loan_term * 1000);
+    const weekly_payment = loan_amount / (loan_term);
     const user = req.user;
-
+    console.log(user);
     const loans = await Loan.create({
         user: user._id,
         loan_amount,
@@ -29,11 +29,10 @@ exports.createLoan = catchAsyncErrors(async(req, res, next) => {
 // Get all loans
 
 exports.getAllLoans = catchAsyncErrors(async (req, res, next) => {
-    const loan = await Loan.findById( req.params.id );
-
-    res.status(200).json({
-        loan,
-    });
+    const loans = await Loan.find({}).sort({ date_applied: -1 });
+  res.status(200).json({
+    loans,
+  });
 });
 
 // Get loan details
